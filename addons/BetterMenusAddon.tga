@@ -19,10 +19,78 @@ Menu, Tray, Icon, ./../icon.ico                 ;Set icon
 Menu, Tray, Add, Addon Info, Info               ;Addon info
 Menu, Tray, Add, Exit addon, Exit               ;Exit
 
-MsgBox, 0, %AddonName%, %AddonName% loaded!     ;Notify user
+;MsgBox, 0, %AddonName%, %AddonName% loaded!     ;Notify user
 
 ; ------------------ Addon code --------------------
 
+diacritics := ["-", "+", "/", "\", "=", ":", "_", "(", ";", ""]
+
+IfExist, .\..\diacritics.dat
+	Loop, Read, .\..\diacritics.dat
+		diacritics[A_Index] := A_LoopReadLine
+
+^+!h::
+Suspend, permit
+Gui, destroy
+Gui, -MinimizeBox
+Gui, +AlwaysOnTop
+Gui, font, s15
+Gui, Add, Text, x10 y5 w70 h30, Letters:
+Gui, Add, Text, x200 y5 w90 h30, Diacritics:
+Gui, font, s10
+
+;Letters
+Gui, Add, Text, x10 y30 w80 h20, Keybind
+Gui, Add, Text, x90 y30 w80 h20, Greek letter
+Gui, Add, Text, x10 y50 w180 h405, % "A`nB`nG`nD`nE`nZ`nH`nQ`nI`nK`nL`nM`nN`nC`nO`nP`nR`nS`nS+space`nT`nU`nF`nX`nP`nW"
+Gui, Add, Text, x90 y50 w180 h405, % "Alpha`nBeta`nGamma`nDelta`nEpsilon`nDzeta`nEta`nTheta`nIota`nKappa`nLambda`nMu`nNu`nXi`nOmicron`nPi`nRho`nSigma`nFinal Sigma`nTau`nUpsilon`nPhi`nChi`nPsi`nOmega"
+
+;Diacritics
+Gui, Add, Text, x200 y30 w80 h20, Diacritic
+Gui, Add, Text, x280 y30 w80 h20, Keybind
+Gui, Add, Text, x200 y50 w120 h190, % "Psili:`nDasia:`nAcute:`nGrave:`nCircumflex:`nDiaeresis:`nMacron:`nBreve:`nSub. Iota:"
+Gui, Add, Text, x280 y50 w40 h190, % diacritics[1] "`n" diacritics[2] "`n" diacritics[4] "`n" diacritics[3] "`n" diacritics[5] "`n" diacritics[6] "`n" diacritics[7] "`n" diacritics[8] "`n" diacritics[9]
+
+;Options
+Gui, font, s15
+Gui, Add, Text, x200 y220 w120 h130, Options:
+Gui, font, s10
+
+Gui, Add, Button, x200 y250 w120 h30, Toggle program
+Gui, Add, Button, x200 y285 w120 h30, Exit program
+
+;Buttons
+Gui, Add, Button, x280 y460 w100 h40, Change Diacritics
+Gui, Add, Button, x10 y460 w90 h40 default, OK
+
+Gui, Show, w400 h510, Help
+return
+
+ButtonChangeDiacritics:
+Suspend, permit
+send, ^+!e
+return
+
+ButtonToggleProgram:
+Suspend, permit
+send, ^+!t
+IF A_ISSUSPENDED = 1
+Menu, tray, icon, disabled_icon.ico, , 1
+else if A_ISSUSPENDED = 0
+Menu, tray, icon, icon.ico, , 1
+return
+
+ButtonExitProgram:
+Suspend, permit
+send, ^+!{esc}
+return
+
+ButtonOK:
+GuiClose:
+GuiEscape:
+Suspend, permit
+Gui, destroy
+return
 
 
 ; ------------------ Menu Code ---------------------
