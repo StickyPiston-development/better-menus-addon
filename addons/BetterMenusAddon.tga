@@ -33,7 +33,9 @@ IfExist, .\..\diacritics.dat
 	Loop, Read, .\..\diacritics.dat
 		diacritics[A_Index] := A_LoopReadLine
 
+Gui, show
 MsgBox, 262144, %AddonName%, % "TypeGreek Windows BetterMenu's addon has been loaded. this addon provides a better menu for typegreek windows helping you with a cheatsheat for the keys and many more things.", 5
+Gui, hide
 
 ^+!h::
 Suspend, permit
