@@ -19,7 +19,11 @@ Menu, Tray, Icon, ./../icon.ico                 ;Set icon
 Menu, Tray, Add, Addon Info, Info               ;Addon info
 Menu, Tray, Add, Exit addon, Exit               ;Exit
 
-;MsgBox, 0, %AddonName%, %AddonName% loaded!     ;Notify user
+hIcon := DllCall("LoadImage", uint, 0, str, A_ScriptDir ".\..\icon.ico"
+	, uint, 1, int, 0, int, 0, uint, 0x10)  ; Type, Width, Height, Flags
+Gui +LastFound  ; Set the "last found window" for use in the next lines.
+SendMessage, 0x80, 0, hIcon  ; Set the window's small icon (0x80 is WM_SETICON).
+SendMessage, 0x80, 1, hIcon  ; Set the window's big icon to the same one.
 
 ; ------------------ Addon code --------------------
 
@@ -58,14 +62,16 @@ Gui, font, s10
 
 Gui, Add, Button, x200 y250 w120 h30, Toggle program
 Gui, Add, Button, x200 y285 w120 h30, Show keybinds
-Gui, Add, Button, x200 y320 w120 h30, Close GUI
-Gui, Add, Button, x200 y355 w120 h30, Exit program
+Gui, Add, Button, x200 y320 w120 h30, Alphabet overlay
+Gui, Add, Button, x200 y355 w120 h30, Diacritics overlay
+Gui, Add, Button, x200 y390 w120 h30, Exit program
 
 ;Buttons
-Gui, Add, Button, x280 y460 w100 h40, Change Diacritics
-Gui, Add, Button, x10 y460 w90 h40 default, OK
+Gui, Add, Button, x10 y470 w110 h40, OK
+Gui, Add, Button, x130 y470 w110 h40, Change Diacritics
+Gui, Add, Button, x250 y470 w110 h40, Close GUI
 
-Gui, Show, w400 h510, Help
+Gui, Show, w370 h520, Help
 return
 
 ButtonChangeDiacritics:
@@ -85,8 +91,40 @@ return
 ButtonShowKeybinds:
 Suspend, permit
 Gui, -AlwaysOnTop
-MsgBox, % "Ctrl+Shift+Alt+H for help`nCtrl+Shift+Alt+T to toggle`nCtrl+Shift+Alt+E to edit diacritics`nCtrl+Shift+Alt+Esc to quit"
+MsgBox, 262144, %AddonName%, % "Ctrl+Shift+Alt+H for help`nCtrl+Shift+Alt+T to toggle`nCtrl+Shift+Alt+E to edit diacritics`nCtrl+Shift+Alt+Esc to quit"
 Gui, +AlwaysOnTop
+return
+
+ButtonAlphabetOverlay:
+Suspend, permit
+Gui, alphabet: destroy
+Gui, alphabet: -MinimizeBox
+Gui, alphabet: +AlwaysOnTop
+
+Gui, alphabet: font, s10
+Gui, alphabet: Add, Text, x10 y5 w80 h20, Keybind
+Gui, alphabet: Add, Text, x90 y5 w80 h20, Greek letter
+Gui, alphabet: Add, Text, x10 y25 w180 h405, % "A`nB`nG`nD`nE`nZ`nH`nQ`nI`nK`nL`nM`nN`nC`nO`nP`nR`nS`nS+space`nT`nU`nF`nX`nP`nW"
+Gui, alphabet: Add, Text, x90 y25 w180 h405, % "Alpha`nBeta`nGamma`nDelta`nEpsilon`nDzeta`nEta`nTheta`nIota`nKappa`nLambda`nMu`nNu`nXi`nOmicron`nPi`nRho`nSigma`nFinal Sigma`nTau`nUpsilon`nPhi`nChi`nPsi`nOmega"
+
+Gui, alphabet: Show, w200 h440, Alphabet overlay
+return
+
+ButtonDiacriticsOverlay:
+Suspend, permit
+Gui, diacritics: destroy
+Gui, diacritics: -MinimizeBox
+Gui, diacritics: +AlwaysOnTop
+Gui, diacritics: font, s10
+
+Gui, diacritics: Add, Text, x10 y5 w80 h20, Diacritic
+Gui, diacritics: Add, Text, x90 y5 w80 h20, Keybind
+Gui, diacritics: Add, Text, x10 y25 w180 h405, % "Psili:`nDasia:`nAcute:`nGrave:`nCircumflex:`nDiaeresis:`nMacron:`nBreve:`nSub. Iota:"
+Gui, diacritics: Add, Text, x90 y25 w180 h405, % diacritics[1] "`n" diacritics[2] "`n" diacritics[4] "`n" diacritics[3] "`n" diacritics[5] "`n" diacritics[6] "`n" diacritics[7] "`n" diacritics[8] "`n" diacritics[9]
+
+Gui, diacritics: Add, Button, x10 y175 w130 h40, Change Diacritics
+
+Gui, diacritics: Show, w150 h220, Diacritics overlay
 return
 
 ButtonCloseGUI:
