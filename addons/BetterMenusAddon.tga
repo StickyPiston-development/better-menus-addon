@@ -27,79 +27,66 @@ SendMessage, 0x80, 1, hIcon  ; Set the window's big icon to the same one.
 
 ; ------------------ Addon code --------------------
 
+; Load diacritics
 diacritics := ["-", "+", "/", "\", "=", ":", "_", "(", ";", ""]
-
 IfExist, .\..\diacritics.dat
 	Loop, Read, .\..\diacritics.dat
 		diacritics[A_Index] := A_LoopReadLine
 
-Gui, show
-MsgBox, 262144, %AddonName%, % "TypeGreek Windows BetterMenu's addon has been loaded. this addon provides a better menu for typegreek windows helping you with a cheatsheat for the keys and many more things.", 5
-Gui, hide
-
 ^+!h::
 Suspend, permit
-Gui, destroy
-Gui, -MinimizeBox
-Gui, +AlwaysOnTop
-Gui, font, s15
-Gui, Add, Text, x10 y5 w70 h30, Letters:
-Gui, Add, Text, x200 y5 w90 h30, Diacritics:
-Gui, font, s10
+Gui, help: destroy
+Gui, help: -MinimizeBox
+Gui, help: font, s15
+Gui, help: Add, Text, x10 y5 w70 h30, Letters:
+Gui, help: Add, Text, x200 y5 w90 h30, Diacritics:
+Gui, help: font, s10
 
 ;Letters
-Gui, Add, Text, x10 y30 w80 h20, Keybind
-Gui, Add, Text, x90 y30 w80 h20, Greek letter
-Gui, Add, Text, x10 y50 w180 h405, % "A`nB`nG`nD`nE`nZ`nH`nQ`nI`nK`nL`nM`nN`nC`nO`nP`nR`nS`nS+space`nT`nU`nF`nX`nP`nW"
-Gui, Add, Text, x90 y50 w180 h405, % "Alpha`nBeta`nGamma`nDelta`nEpsilon`nDzeta`nEta`nTheta`nIota`nKappa`nLambda`nMu`nNu`nXi`nOmicron`nPi`nRho`nSigma`nFinal Sigma`nTau`nUpsilon`nPhi`nChi`nPsi`nOmega"
+Gui, help: Add, Text, x10 y30 w80 h20, Keybind
+Gui, help: Add, Text, x90 y30 w80 h20, Greek letter
+Gui, help: Add, Text, x10 y50 w180 h405, % "A`nB`nG`nD`nE`nZ`nH`nQ`nI`nK`nL`nM`nN`nC`nO`nP`nR`nS`nS+space`nT`nU`nF`nX`nP`nW"
+Gui, help: Add, Text, x90 y50 w180 h405, % "Alpha`nBeta`nGamma`nDelta`nEpsilon`nDzeta`nEta`nTheta`nIota`nKappa`nLambda`nMu`nNu`nXi`nOmicron`nPi`nRho`nSigma`nFinal Sigma`nTau`nUpsilon`nPhi`nChi`nPsi`nOmega"
 
 ;Diacritics
-Gui, Add, Text, x200 y30 w80 h20, Diacritic
-Gui, Add, Text, x280 y30 w80 h20, Keybind
-Gui, Add, Text, x200 y50 w120 h190, % "Psili:`nDasia:`nAcute:`nGrave:`nCircumflex:`nDiaeresis:`nMacron:`nBreve:`nSub. Iota:"
-Gui, Add, Text, x280 y50 w40 h190, % diacritics[1] "`n" diacritics[2] "`n" diacritics[4] "`n" diacritics[3] "`n" diacritics[5] "`n" diacritics[6] "`n" diacritics[7] "`n" diacritics[8] "`n" diacritics[9]
+Gui, help: Add, Text, x200 y30 w80 h20, Diacritic
+Gui, help: Add, Text, x280 y30 w80 h20, Keybind
+Gui, help: Add, Text, x200 y50 w120 h190, % "Psili:`nDasia:`nAcute:`nGrave:`nCircumflex:`nDiaeresis:`nMacron:`nBreve:`nSub. Iota:"
+Gui, help: Add, Text, x280 y50 w40 h190, % diacritics[1] "`n" diacritics[2] "`n" diacritics[4] "`n" diacritics[3] "`n" diacritics[5] "`n" diacritics[6] "`n" diacritics[7] "`n" diacritics[8] "`n" diacritics[9]
 
 ;Options
-Gui, font, s15
-Gui, Add, Text, x200 y220 w120 h130, Options:
-Gui, font, s10
+Gui, help: font, s15
+Gui, help: Add, Text, x200 y220 w120 h130, Options:
+Gui, help: font, s10
 
-Gui, Add, Button, x200 y250 w120 h30, Toggle program
-Gui, Add, Button, x200 y285 w120 h30, Show keybinds
-Gui, Add, Button, x200 y320 w120 h30, Alphabet overlay
-Gui, Add, Button, x200 y355 w120 h30, Diacritics overlay
-Gui, Add, Button, x200 y390 w120 h30, Exit program
+Gui, help: Add, Button, x200 y250 w120 h30, Keybind overlay
+Gui, help: Add, Button, x200 y285 w120 h30, Alphabet overlay
+Gui, help: Add, Button, x200 y320 w120 h30, Diacritics overlay
+Gui, help: Add, Button, x200 y355 w120 h30, Exit program
 
 ;Buttons
-Gui, Add, Button, x10 y470 w110 h40, OK
-Gui, Add, Button, x130 y470 w110 h40, Change Diacritics
-Gui, Add, Button, x250 y470 w110 h40, Close GUI
+Gui, help: Add, Button, x10 y470 w110 h40, OK
+Gui, help: Add, Button, x130 y470 w110 h40, Change Diacritics
+Gui, help: Add, Button, x250 y470 w110 h40, Close GUI
 
-Gui, Show, w370 h520, Help
+Gui, help: Show, w370 h520, Help
 return
 
-ButtonChangeDiacritics:
+HelpButtonChangeDiacritics:
 Suspend, permit
 send, ^+!e
 return
 
-ButtonToggleProgram:
-Suspend, toggle
-send, ^+!t
-IF A_ISSUSPENDED = 1
-Menu, tray, icon, disabled_icon.ico, , 1
-else if A_ISSUSPENDED = 0
-Menu, tray, icon, icon.ico, , 1
-return
-
-ButtonShowKeybinds:
+HelpButtonKeybindOverlay:
 Suspend, permit
-Gui, -AlwaysOnTop
-MsgBox, 262144, %AddonName%, % "Ctrl+Shift+Alt+H for help`nCtrl+Shift+Alt+T to toggle`nCtrl+Shift+Alt+E to edit diacritics`nCtrl+Shift+Alt+Esc to quit"
-Gui, +AlwaysOnTop
+Gui, Keybinds: -MinimizeBox
+Gui, Keybinds: +AlwaysOnTop
+Gui, Keybinds: font, s10
+Gui, Keybinds: add, text,, % "Ctrl+Shift+Alt+H for help`nCtrl+Shift+Alt+T to toggle`nCtrl+Shift+Alt+E to edit diacritics`nCtrl+Shift+Alt+Esc to quit"
+Gui, Keybinds: show,,Keybind overlay
 return
 
-ButtonAlphabetOverlay:
+HelpButtonAlphabetOverlay:
 Suspend, permit
 Gui, alphabet: destroy
 Gui, alphabet: -MinimizeBox
@@ -114,7 +101,7 @@ Gui, alphabet: Add, Text, x90 y25 w180 h405, % "Alpha`nBeta`nGamma`nDelta`nEpsil
 Gui, alphabet: Show, w200 h440, Alphabet overlay
 return
 
-ButtonDiacriticsOverlay:
+HelpButtonDiacriticsOverlay:
 Suspend, permit
 Gui, diacritics: destroy
 Gui, diacritics: -MinimizeBox
@@ -129,23 +116,20 @@ Gui, diacritics: Add, Text, x90 y25 w180 h405, % diacritics[1] "`n" diacritics[2
 Gui, diacritics: Show, w150 h180, Diacritics overlay
 return
 
-ButtonCloseGUI:
-Suspend, permit
-Gui, destroy
-return
-
-ButtonExitProgram:
+HelpButtonExitProgram:
 Suspend, permit
 send, ^+!{esc}
 return
 
-ButtonOK:
-GuiClose:
-GuiEscape:
+HelpButtonOK:
+HelpButtonCloseGUI:
 Suspend, permit
-Gui, destroy
+Gui, help: hide
 return
 
+GuiClose:
+Gui, Destroy
+Return
 
 ; ------------------ Menu Code ---------------------
 
