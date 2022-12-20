@@ -126,9 +126,7 @@ Gui, diacritics: Add, Text, x90 y5 w80 h20, Keybind
 Gui, diacritics: Add, Text, x10 y25 w180 h405, % "Psili:`nDasia:`nAcute:`nGrave:`nCircumflex:`nDiaeresis:`nMacron:`nBreve:`nSub. Iota:"
 Gui, diacritics: Add, Text, x90 y25 w180 h405, % diacritics[1] "`n" diacritics[2] "`n" diacritics[4] "`n" diacritics[3] "`n" diacritics[5] "`n" diacritics[6] "`n" diacritics[7] "`n" diacritics[8] "`n" diacritics[9]
 
-Gui, diacritics: Add, Button, x10 y175 w130 h40, Change Diacritics
-
-Gui, diacritics: Show, w150 h220, Diacritics overlay
+Gui, diacritics: Show, w150 h180, Diacritics overlay
 return
 
 ButtonCloseGUI:
